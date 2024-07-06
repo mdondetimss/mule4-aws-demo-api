@@ -84,7 +84,7 @@ Following the above best practises, I've created the demo-api specification whic
 
 ![](/.attachments/demo-raml-structure-health.PNG)
 
-#### dataTypes/health.raml
+#### dataTypes/health-types.raml
 This is a response data type file when client will request for /health resource. we don't have any request payload so we don't require any request dataType file for /health resource.
 
 ```raml
@@ -127,8 +127,63 @@ get:
           type: !include ../dataTypes/health.raml
           example: !include ../examples/health-get-response.json
 ```
+#### dataTypes/aws-sapi-types.raml
+This is a response data type file when client will request for /document resource. .
+```raml
+#%RAML 1.0 Library
+usage: Tyoes for aws-sapi
+types:
+  upload-document-request-type:
+    type: object
+    description: This type used to upload document request
+    properties:
+      bucketName: 
+        type: string
+        required: true
+        example: "uho-covid-docs"
+      folderPath: 
+        type: string
+        required: true
+        example: "identity"
+      fileName: 
+        type: string
+        required: true
+        example: "35653.png"
+      document: 
+        type: string
+        required: true
+        example: "iVBORw0KGgoAAAANSUhEUgAAAOIAAACRCAYAAADepmS4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjw"
+  upload-document-response-type:
+    description: This type used to respond back the status of upload document request
+    type: object
+    properties:
+      code:
+        type: integer
+        description: status code
+        required: true 
+      message:
+        description: A human readable message that describes the status
+        type: string
+        required: true
+      description:
+        description: A human readable, comprehensive explanation of the status
+        type: string
+        required: false
+      dateTime:
+        description: The date-time stamp of the response
+        type: datetime
+        required: true
+      transactionId:
+        description: Internal identifier of the transaction
+        type: string
+        required: true
+```
+      
+      
+      
 
-#### demo-api.raml
+
+#### aws-demo-api.raml
 This is main API raml file, which defines the API specification by referencing resourceTypes only.
 
 
